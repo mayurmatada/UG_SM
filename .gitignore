@@ -1,2 +1,7 @@
 PIPELINE_SUMMARY.md
 QUICK_REFERENCE.md
+Data/
+data_file_2025_45_points.xlsx
+*.csv
+*.zip
+*.xlsx

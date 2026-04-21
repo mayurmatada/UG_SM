@@ -5,3 +5,15 @@ data_file_2025_45_points.xlsx
 *.csv
 *.zip
 *.xlsx
+Report.aux
+Report.fdb_latexmk
+Report.fls
+Report.lof
+Report.log
+Report.lol
+Report.lot
+Report.out
+Report.synctex.gz
+Report.tex
+Report.toc
+SPAIN_PROJECT_REPORT.md

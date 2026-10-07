@@ -1,0 +1,42 @@
+\begin{thebibliography}{5}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Batchu et~al.(2023)Batchu, Nearing, and Gulshan]{FusionCNN}
+Vishal Batchu, Grey Nearing, and Varun Gulshan.
+\newblock A deep learning data fusion model using sentinel-1/2, soilgrids, smap, and gldas for soil moisture retrieval.
+\newblock \emph{Journal of Hydrometeorology}, 24\penalty0 (10):\penalty0 1789 -- 1823, 2023.
+\newblock \doi{10.1175/JHM-D-22-0118.1}.
+\newblock URL \url{https://journals.ametsoc.org/view/journals/hydr/24/10/JHM-D-22-0118.1.xml}.
+
+\bibitem[Fang et~al.(2017)Fang, Shen, Kifer, and Yang]{LSTMPaper}
+Kuai Fang, Chaopeng Shen, Daniel Kifer, and Xiao Yang.
+\newblock Prolongation of smap to spatiotemporally seamless coverage of continental u.s. using a deep learning neural network.
+\newblock \emph{Geophysical Research Letters}, 44\penalty0 (21):\penalty0 11,030--11,039, 2017.
+\newblock \doi{https://doi.org/10.1002/2017GL075619}.
+\newblock URL \url{https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1002/2017GL075619}.
+
+\bibitem[Pandey et~al.(2025)Pandey, Srivastava, Dave, Gupta, and Sharma]{PhysicalModelPaper}
+Dharmendra Pandey, Prashant Srivastava, Rucha Dave, Praveen Gupta, and Rashmi Sharma.
+\newblock Improvised sar time series algorithm for nisar high resolution soil moisture product over indian tropical region.
+\newblock pages 2111--2115, 08 2025.
+\newblock \doi{10.1109/IGARSS55030.2025.11313937}.
+
+\bibitem[Wei et~al.(2025)Wei, Wei, Wang, Lu, Tian, Zhang, and Zhong]{GlobalXGBoost}
+Zeyang Wei, Lifei Wei, Ting Wang, Qikai Lu, Shuang Tian, Fei Zhang, and Yanfei Zhong.
+\newblock A global long-term daily multilayer soil moisture dataset derived from machine learning.
+\newblock \emph{Scientific Data}, 13\penalty0 (1):\penalty0 122, Dec 2025.
+\newblock ISSN 2052-4463.
+\newblock \doi{10.1038/s41597-025-06436-0}.
+\newblock URL \url{https://doi.org/10.1038/s41597-025-06436-0}.
+
+\bibitem[Xu et~al.(2021)Xu, Zhang, Long, and Qin]{OklahomaCNN}
+Wei Xu, Zhaoxu Zhang, Zehao Long, and Qiming Qin.
+\newblock Downscaling smap soil moisture products with convolutional neural network.
+\newblock \emph{IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing}, 14:\penalty0 4051--4062, 2021.
+\newblock \doi{10.1109/JSTARS.2021.3069774}.
+
+\end{thebibliography}

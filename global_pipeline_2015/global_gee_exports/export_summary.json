@@ -1,0 +1,50 @@
+{
+  "contract": {
+    "version": "global-v1",
+    "patch_size": 13,
+    "grid_scale_m": 1000,
+    "timezone": "UTC",
+    "target_depth_min_m": 0.0,
+    "target_depth_max_m": 0.05,
+    "fallback_depth_max_m": 0.1,
+    "soil_moisture_unit": "m3/m3",
+    "soil_moisture_min": 0.0,
+    "soil_moisture_max": 0.6,
+    "quality_flag": "G",
+    "spatial_channels": [
+      "ndvi",
+      "vv",
+      "vh",
+      "vv_vh_difference",
+      "incidence_angle",
+      "lst_celsius",
+      "smap",
+      "precipitation_mm",
+      "vpd_kpa",
+      "antecedent_precipitation_mm",
+      "albedo"
+    ],
+    "static_channels": [
+      "clay_pct",
+      "sand_pct",
+      "silt_pct",
+      "elevation_m",
+      "slope_deg",
+      "aspect_deg"
+    ]
+  },
+  "station_count": 1465,
+  "unique_station_count": 1465,
+  "resolution": "1000 m nominal",
+  "earth_engine_crs": "SR-ORG:6974",
+  "resolution_cell_count": 1465,
+  "collapsed_station_count": 303,
+  "tile_count": 16,
+  "maximum_stations_per_tile": 100,
+  "task_count": 32,
+  "start_date": "2015-01-01",
+  "end_date_exclusive": "2016-01-01",
+  "export_format": "TFRecord",
+  "compression": "GZIP",
+  "drive_folder": "global_ismn_exports"
+}

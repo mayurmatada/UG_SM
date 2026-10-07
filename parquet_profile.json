@@ -1,0 +1,24 @@
+{
+  "file": "Data/Global/global_ismn_daily.parquet",
+  "file_size_gb": 0.05666174925863743,
+  "raw_rows": 5045849,
+  "unique_stations": 2210,
+  "unique_dates": 4204,
+  "unique_networks": 61,
+  "min_date": "2015-04-01 00:00:00",
+  "max_date": "2026-10-03 00:00:00",
+  "unique_station_date_samples": 3514643,
+  "groups_with_multiple_rows": 932167,
+  "max_rows_per_station_date": 12,
+  "mean_rows_per_station_date": 1.4356647318091766,
+  "missing_expected_columns": [],
+  "spatial_extent": {
+    "min_lat": -45.26482,
+    "max_lat": 71.3298,
+    "min_lon": -165.12042,
+    "max_lon": 175.91821
+  },
+  "n_years": 12,
+  "benchmark_10000_size": 10000,
+  "benchmark_coverage_size": 1609
+}

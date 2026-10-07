@@ -1,0 +1,100 @@
+%% Creator: Inkscape 1.2.2 (b0a8486541, 2022-12-01), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Architecture.drawio_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{425.25bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.27336861)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.86948854,0.79329806){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Bayesian\end{tabular}}}}%
+    \put(0.86948854,0.77001764){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Optimizer\end{tabular}}}}%
+    \put(0.86948854,0.74673721){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Training Loop\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44268078,0.50440917){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Main Model\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44620811,0.87343915){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Static\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.55079365,0.97730159){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Temporal\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.21340388,0.76895944){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}CNN\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44268078,0.76895944){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}MLP\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.67195767,0.76895944){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}LSTM\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44268078,0.59259259){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Fusion DNN\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44268078,0.34109347){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Ridge Regularized\end{tabular}}}}%
+    \put(0.44268078,0.31569665){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Calibration Unit\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44268078,0.22151675){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Unscaling\end{tabular}}}}%
+    \put(0.44268078,0.19611993){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}+\end{tabular}}}}%
+    \put(0.44268078,0.17072311){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Anchor Addition\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.62257496,0.20881834){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}SMAP Anchor \end{tabular}}}}%
+    \put(0.62257496,0.18342152){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Data\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44268078,0.04585538){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Evaluation\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.31922399,0.98059965){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Dynamic\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.00529101,1.18765432){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Google Earth Engine\end{tabular}}}}%
+    \put(0.00529101,1.1622575){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}13km x 13km Patches\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.44268078,1.18765432){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Data Routing \&\end{tabular}}}}%
+    \put(0.44268078,1.1622575){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Compiling\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{Architecture.drawio_svg-tex.pdf}}%
+    \put(0.60493827,1.20035273){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}ISMN In-Situ\end{tabular}}}}%
+    \put(0.60493827,1.17495591){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}REHEMEDUS\end{tabular}}}}%
+    \put(0.60493827,1.14955908){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Data\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{Architecture.drawio_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,73 @@
+{
+  "rows": 3514,
+  "networks": 55,
+  "stations": 1768,
+  "rows_by_split": {
+    "test": 581,
+    "train": 1850,
+    "validation": 1083
+  },
+  "networks_by_split": {
+    "train": [
+      "AMMA-CATCH",
+      "COSMOS-UK",
+      "CTP_SMTMN",
+      "CW3E",
+      "DAHRA",
+      "DWD",
+      "FLUXNET-AMERIFLUX",
+      "FMI",
+      "FR_Aqui",
+      "HOAL",
+      "HOBE",
+      "HYDROL-NET_PERUGIA",
+      "KIHS_CMC",
+      "LAB-net",
+      "NAQU",
+      "NGARI",
+      "NVE",
+      "REMEDHUS",
+      "RISMA",
+      "ROMPS",
+      "Ru_CFR",
+      "SCAN",
+      "SONTE-China",
+      "STEMS",
+      "TAHMO",
+      "TxSON",
+      "USCRN",
+      "VDS",
+      "WATERLINE",
+      "WIT-Network",
+      "WSMN",
+      "XMS-CAT",
+      "YJG-SM"
+    ],
+    "validation": [
+      "BIEBRZA_S-1",
+      "Berlin",
+      "LABFLUX",
+      "MAQU",
+      "OZNET",
+      "RSMN",
+      "SMOSMANIA",
+      "SNOTEL",
+      "TERENO",
+      "UMSUOL",
+      "iRON"
+    ],
+    "test": [
+      "ARM",
+      "IMA_CAN1",
+      "IPE",
+      "KIHS_SMC",
+      "MOL-RAO",
+      "MySMNet",
+      "SD_DEM",
+      "SKKU",
+      "SMN-SDR",
+      "SOILSCAPE",
+      "TWENTE"
+    ]
+  }
+}

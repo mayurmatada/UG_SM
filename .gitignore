@@ -5,6 +5,8 @@ data_file_2025_45_points.xlsx
 *.csv
 *.zip
 *.xlsx
+*.parquet
+*.pyc
 Report.aux
 Report.fdb_latexmk
 Report.fls

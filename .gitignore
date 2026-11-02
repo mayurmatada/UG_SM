@@ -7,6 +7,10 @@ data_file_2025_45_points.xlsx
 *.xlsx
 *.parquet
 *.pyc
+*.Identifier
+*.gz
+*.sha256
+*.tmp
 Report.aux
 Report.fdb_latexmk
 Report.fls
@@ -19,3 +23,6 @@ Report.synctex.gz
 Report.tex
 Report.toc
 SPAIN_PROJECT_REPORT.md
+# Generated training caches, checkpoints and Optuna databases
+/Data/Global/model_ready_global_v1/training_runs/
+/Data/Global/training_runs/

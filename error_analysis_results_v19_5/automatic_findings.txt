@@ -1,0 +1,48 @@
+v19.5 ERROR ANALYSIS — AUTOMATIC SUMMARY
+Target mode: direct
+
+TRAIN full-split calibrated performance:
+  location_history: n=2,216,784, MAE=0.03544, RMSE=0.04836, bias=-0.00065, R²=0.83079
+  environment_only: n=2,544,038, MAE=0.05892, RMSE=0.07580, bias=0.00497, R²=0.57113
+  matched rows=1,768,579; paired location−environment MAE=-0.02424; location win rate=70.11%
+
+TEST full-split calibrated performance:
+  location_history: n=905,248, MAE=0.04854, RMSE=0.06594, bias=0.00123, R²=0.65341
+  environment_only: n=644,716, MAE=0.06794, RMSE=0.08626, bias=0.00405, R²=0.47046
+  matched rows=182,528; paired location−environment MAE=-0.01731; location win rate=62.62%
+
+Matched test stations with >= 10 rows: 201
+  Lower station RMSE: location_history=138, environment_only=63, ties=0
+  Largest location-history gains (most negative RMSE delta):
+    SNOTEL:SNOTEL__Mt._Ryan n=585 ΔRMSE=-0.10383
+    Ru_CFR:Ru_CFR__Fyodorovskoye_dry_spruce_stand n=419 ΔRMSE=-0.10300
+    REMEDHUS:REMEDHUS__El_Coto n=574 ΔRMSE=-0.10128
+    RSMN:RSMN__Darabani n=333 ΔRMSE=-0.09454
+    SNOTEL:SNOTEL__Navajo_Whiskey_Ck n=1151 ΔRMSE=-0.09290
+  Largest environment-only gains (most positive RMSE delta):
+    SCAN:SCAN__Johnson_Farm n=1208 ΔRMSE=0.04772
+    SNOTEL:SNOTEL__Middle_Fork_Camp n=96 ΔRMSE=0.03572
+    SNOTEL:SNOTEL__Elk_Cabin n=1096 ΔRMSE=0.03309
+    Berlin:Berlin__PflABerlin11Humb n=1282 ΔRMSE=0.03265
+    USCRN:USCRN__Edinburg_17_NNE n=1324 ΔRMSE=0.03129
+
+Interpretation reminders:
+- Use test metrics as the primary generalisation comparison.
+- Prefer paired metrics when judging the value of location history.
+- Check overlap counts: a small matched subset may not represent the full test set.
+- Investigate station/network outliers before drawing regional conclusions.
+- Check residual sign: positive means overprediction; negative means underprediction.
+- The notebook is diagnostic; it does not establish the cause of any error pattern.
+
+Configured review window: 2025-09-01 to 2025-11-30 (inclusive)
+  location_history: full RMSE=0.06594; outside-window RMSE=0.06397; outside-window R²=0.67761
+  location_history robust-screen months: ['2025-10']
+  environment_only: full RMSE=0.08626; outside-window RMSE=0.08618; outside-window R²=0.47383
+  environment_only robust-screen months: ['2015-09']
+High-error trimming is a selective-retention sensitivity analysis, not a revised test score.
+  location_history: target R²=0.70, status=reached, removed_pct=1.30, retained=893480.0
+  location_history: target R²=0.80, status=reached, removed_pct=7.90, retained=833734.0
+  location_history: target R²=0.90, status=reached, removed_pct=24.10, retained=687084.0
+  environment_only: target R²=0.70, status=reached, removed_pct=16.80, retained=536404.0
+  environment_only: target R²=0.80, status=reached, removed_pct=32.30, retained=436473.0
+  environment_only: target R²=0.90, status=reached, removed_pct=54.10, retained=295925.0

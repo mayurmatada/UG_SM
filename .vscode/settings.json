@@ -1,5 +1,17 @@
 {
     "chat.tools.terminal.autoApprove": {
         ".venv/bin/python": true
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.jj": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/GLOBAL_SOIL_MOISTURE_MODEL_REPORT.aux": true,
+        "**/GLOBAL_SOIL_MOISTURE_MODEL_REPORT.log": true,
+        "**/GLOBAL_SOIL_MOISTURE_MODEL_REPORT.gz": true,
+        "**/GLOBAL_SOIL_MOISTURE_MODEL_REPORT.out": true
     }
 }

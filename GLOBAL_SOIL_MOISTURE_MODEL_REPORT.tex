@@ -215,74 +215,10 @@ is approximately 0.11190 before the learned output calibration. The report
 therefore distinguishes raw, calibrated, robust, and anchor comparisons rather
 than presenting one score as if it represented every layer of the system.}
 
-\chapter{Project Motivation, Scope, and Scientific Question}
+\chapter{Introduction}
+\section{Architecture of the Entire Scientific-Computing System}
 
-\section{Soil moisture as a physical state variable}
-Soil moisture is the water held in soil pore space and is commonly represented
-as volumetric water content. In the surface layer it responds to precipitation,
-infiltration, evaporation, transpiration, runoff, soil texture, terrain,
-vegetation, and atmospheric demand. It is not a passive scalar that changes
-uniformly across a landscape. Two neighbouring locations can respond
-differently to the same rainfall because their storage and drainage properties
-differ.
-
-The physical importance is broad. Surface moisture influences land-atmosphere
-energy exchange, plant stress, drought evolution, runoff generation, and
-irrigation demand. The project is therefore motivated by a measurement
-problem: in-situ stations provide high-value local observations but are sparse,
-whereas remotely sensed products provide spatial coverage but are indirect,
-coarse, intermittent, or affected by clouds, vegetation, geometry, and
-footprint mismatch.
-
-\section{Why downscaling and fusion are needed}
-A coarse microwave retrieval can provide a useful large-scale state estimate
-while averaging over fields, roads, terrain, and vegetation communities. A
-finer-scale product must use auxiliary information to infer local variation.
-This is not the same as creating new measurements. It is a conditional
-reconstruction constrained by available observations and learned relationships.
-
-The global system combines:
-\begin{enumerate}
-    \item An in-situ target with explicit quality and depth policy;
-    \item Optical vegetation and thermal information from MODIS;
-    \item Radar backscatter structure from Sentinel-1;
-    \item Meteorological forcing and memory from ERA5-Land;
-    \item A coarse microwave anchor from SMAP;
-    \item Static texture and terrain from GEE exports;
-    \item Location and station history in one controlled model configuration.
-\end{enumerate}
-
-\section{The central research question}
-The operational research question is:
-\begin{quote}
-Can a verified multi-modal system estimate daily near-surface soil moisture at
-1~km station-centred support from heterogeneous global observations while
-retaining enough provenance, computational efficiency, and diagnostic
-transparency for scientific interpretation?
-\end{quote}
-
-This question contains three subquestions:
-\begin{enumerate}
-    \item Can the data sources be harmonised without silently changing the
-    physical target?
-    \item Can the remote-sensing workload be executed at global scale without
-    repeated or unrecoverable work?
-    \item Does a model with spatial, temporal, static, location, and anchor
-    pathways outperform simpler environmental-only alternatives under
-    station/network-aware evaluation?
-\end{enumerate}
-
-\section{Scope and non-claims}
-The model estimates the observed target distribution; it does not solve a
-complete soil-water balance, perform causal inference, or guarantee physical
-conservation. The report does not claim that a high $R^2$ proves universal
-geographic transfer. It also does not treat oracle trimming as a deployment
-filter or confuse the Azure processing client with the Planetary Computer
-archive.
-
-\chapter{Architecture of the Entire Scientific-Computing System}
-
-\section{System-level view}
+\subsection{System-level view}
 \begin{figure}[H]
 \centering
 \includesvg[inkscapelatex=false,width=0.65\textwidth]{Builtsvg/latex/1}
@@ -299,7 +235,7 @@ archive.
 \end{figure}
 \end{landscape}
 
-\section{Scale of the project}
+\subsection{Scale of the project}
 The 143,850-line implementation is distributed across executable notebooks,
 Python modules, shell orchestration, validation programs, model exports, and
 analysis outputs. The number is useful as a description of scope rather than
@@ -317,23 +253,23 @@ Each count corresponds to a different systems problem: streaming and audit,
 identity preservation, remote request amortisation, restartability, and
 full-population analysis.
 
-\chapter{Global Data Contract and Ground Truth}
+\section{Global Data Contract and Ground Truth}
 
-\section{Why a contract is necessary}
+\subsection{Why a contract is necessary}
 When data arrive from dozens of networks and products, a model can train
 successfully on an invalid mixture. A contract makes the physical meaning
 explicit before storage and model code. The current global contract records
 UTC dates, a nominal 1~km grid, a $13\times13$ footprint, target units,
 accepted quality, depth classes, and channel counts.
 
-\section{Depth and quality}
+\subsection{Depth and quality}
 The target policy distinguishes near-surface 0--5~cm measurements from the
 explicit 5--10~cm fallback and excludes measurements outside 0--10~cm. Only
 quality flag \texttt{G} contributes to daily labels. This matters because a
 numerically finite value from a deeper sensor is not interchangeable with a
 surface value.
 
-\section{Archive audit and streaming conversion}
+\subsection{Archive audit and streaming conversion}
 The archive contains 4,340 station files, 4,002 compatible-depth files, and
 61 networks. The converter supports directories and ZIP archives without
 extracting the complete archive. One source file is opened, its header is
@@ -360,7 +296,7 @@ working set from “the entire archive plus dataframe overhead” to “one sour
 file plus one daily accumulator.” The resulting Parquet table remains
 columnar, compressed, auditable, and joinable.}
 
-\section{Ground-truth statistics}
+\subsection{Ground-truth statistics}
 \begin{itemize}
     \item 144,466,562 observations audited.
     \item 103,504,765 good-quality rows.
@@ -375,7 +311,73 @@ columnar, compressed, auditable, and joinable.}
 Depth-stratified reporting remains important because the hydrological response
 time and storage physics are not identical between 0--5 and 5--10~cm.}
 
-\chapter{Data Sources, Provenance, and Environmental Predictors}
+\section{Project Motivation, Scope, and Scientific Question}
+
+\subsection{Soil moisture as a physical state variable}
+Soil moisture is the water held in soil pore space and is commonly represented
+as volumetric water content. In the surface layer it responds to precipitation,
+infiltration, evaporation, transpiration, runoff, soil texture, terrain,
+vegetation, and atmospheric demand. It is not a passive scalar that changes
+uniformly across a landscape. Two neighbouring locations can respond
+differently to the same rainfall because their storage and drainage properties
+differ.
+
+The physical importance is broad. Surface moisture influences land-atmosphere
+energy exchange, plant stress, drought evolution, runoff generation, and
+irrigation demand. The project is therefore motivated by a measurement
+problem: in-situ stations provide high-value local observations but are sparse,
+whereas remotely sensed products provide spatial coverage but are indirect,
+coarse, intermittent, or affected by clouds, vegetation, geometry, and
+footprint mismatch.
+
+\subsection{Why downscaling and fusion are needed}
+A coarse microwave retrieval can provide a useful large-scale state estimate
+while averaging over fields, roads, terrain, and vegetation communities. A
+finer-scale product must use auxiliary information to infer local variation.
+This is not the same as creating new measurements. It is a conditional
+reconstruction constrained by available observations and learned relationships.
+
+The global system combines:
+\begin{enumerate}
+    \item An in-situ target with explicit quality and depth policy;
+    \item Optical vegetation and thermal information from MODIS;
+    \item Radar backscatter structure from Sentinel-1;
+    \item Meteorological forcing and memory from ERA5-Land;
+    \item A coarse microwave anchor from SMAP;
+    \item Static texture and terrain from GEE exports;
+    \item Location and station history in one controlled model configuration.
+\end{enumerate}
+
+\subsection{The central research question}
+The operational research question is:
+\begin{quote}
+Can a verified multi-modal system estimate daily near-surface soil moisture at
+1~km station-centred support from heterogeneous global observations while
+retaining enough provenance, computational efficiency, and diagnostic
+transparency for scientific interpretation?
+\end{quote}
+
+This question contains three subquestions:
+\begin{enumerate}
+    \item Can the data sources be harmonised without silently changing the
+    physical target?
+    \item Can the remote-sensing workload be executed at global scale without
+    repeated or unrecoverable work?
+    \item Does a model with spatial, temporal, static, location, and anchor
+    pathways outperform simpler environmental-only alternatives under
+    station/network-aware evaluation?
+\end{enumerate}
+
+\subsection{Scope and non-claims}
+The model estimates the observed target distribution; it does not solve a
+complete soil-water balance, perform causal inference, or guarantee physical
+conservation. The report does not claim that a high $R^2$ proves universal
+geographic transfer. It also does not treat oracle trimming as a deployment
+filter or confuse the Azure processing client with the Planetary Computer
+archive.
+
+\chapter{Data}
+\section{Data Sources, Provenance, and Environmental Predictors}
 
 The predictors are introduced in the order in which they contribute to the
 physical interpretation of the target. Meteorological forcing describes the
@@ -385,7 +387,7 @@ context, and static layers describe persistent differences between locations.
 Keeping these roles distinct helps explain both the value of fusion and the
 limits of treating every input as interchangeable.
 
-\section{Data sources and providers}
+\subsection{Data sources and providers}
 The global dataset combines observations and environmental products produced
 or maintained by different scientific organisations. Keeping the provider
 explicit is important because the organisation that hosts a file is not
@@ -406,11 +408,11 @@ always the organisation that created the measurement or product.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/data_sources/ISMN_global_station_map.png}
-\caption{Global distribution of stations in the International Soil Moisture Network (ISMN), showing the worldwide observation network from which the global in-situ data are drawn. The map is reproduced as a reference to the ISMN network and the Austrian GCOS inventory report \citep{GCOSAustria}.}
+\caption{Global distribution of stations in the International Soil Moisture Network (ISMN), showing the worldwide observation network from which the global in-situ data are drawn.}
 \label{fig:ismn-global-stations}
 \end{figure}
 
-\section{Provenance map}
+\subsection{Provenance map}
 \begin{figure}[H]
 \centering
 \includesvg[inkscapelatex=false,width=\textwidth,height=0.72\textheight,keepaspectratio]{Builtsvg/latex/3}
@@ -418,26 +420,26 @@ always the organisation that created the measurement or product.
 \label{fig:provenance}
 \end{figure}
 
-\section{Copernicus ERA5-Land}
+\subsection{Copernicus ERA5-Land}
 ERA5-Land supplies daily meteorological forcing. The feature layer includes
 precipitation, 2-m temperature, dewpoint, vapour-pressure deficit, and an
 antecedent precipitation index. The access strategy reuses unique reanalysis
 grid points and processes point batches rather than repeatedly requesting the
 same grid location for nearby stations.
 
-\section{NASA SMAP}
+\subsection{NASA SMAP}
 SMAP provides a broad-footprint microwave soil-moisture context. The extraction
 aggregates valid observations to daily station or cell values and retains
 observation counts, conflicts, and availability. Missing SMAP is represented
 explicitly rather than filled with a physical-looking zero.
 
-\section{MODIS from Planetary Computer}
+\subsection{MODIS from Planetary Computer}
 MODIS supplies EVI and LST through STAC discovery and COG or tile access.
 Year-partitioned Zarr arrays preserve the multidimensional product while keeping
 the scalar sample index separate. The EVI and LST arrays retain their distinct
 footprints rather than being forced into a false common native resolution.
 
-\section{Sentinel-1 RTC from Planetary Computer}
+\subsection{Sentinel-1 RTC from Planetary Computer}
 Sentinel-1 provides radar-sensitive VV and VH context and their ratio. The
 nearest valid scene is selected within an 18-day tolerance, with deterministic
 earlier-date tie breaking. The production path uses a benchmarked 512 by 512
@@ -449,13 +451,13 @@ searches, SAS signing, COG windows, overview semantics, acquisition age,
 cluster mapping, shard completion, and checksums all contribute to the numerical
 meaning of the final feature.}
 
-\section{Static layers from Google Earth Engine}
+\subsection{Static layers from Google Earth Engine}
 GEE contributes static soil and terrain variables: clay, sand, silt, elevation,
 slope, and aspect. Static extraction is separated from dynamic acquisition and
 reused across years. Older GEE notebooks are treated as experiments or
 prototypes, not as evidence that dynamic products came from GEE.
 
-\chapter{Remote Acquisition and Distributed Data Engineering}
+\section{Remote Acquisition and Distributed Data Engineering}
 
 Once the labels and predictor roles were defined, the next challenge was to
 obtain the data without losing either provenance or operational control. The
@@ -464,21 +466,21 @@ different interfaces. The following sections therefore describe not only where
 the data came from, but also how the extraction was organised so that a
 temporary network or machine failure did not become a scientific failure.
 
-\section{Why remote data extraction became the dominant systems problem}
+\subsection{Why remote data extraction became the dominant systems problem}
 Remote raster extraction has fixed costs beyond pixel count: catalogue search,
 authentication and signing, TLS and HTTP setup, COG tile lookup, decompression,
 window conversion, reprojection, and local serialization. A design that performs
 one complete sequence for every station-date sample can be dominated by fixed
 overhead.
 
-\section{Cell reduction and collision maps}
+\subsection{Cell reduction and collision maps}
 Stations are mapped to deterministic approximate 1~km cells. Collocated requests
 are collapsed for the expensive raster operation while a collision map retains
 the relationship between original station IDs and the representative cell.
 This is a major reduction in redundant work, but the collision map prevents the
 reduction from becoming an undocumented loss of identity.
 
-\section{Scene clustering}
+\subsection{Scene clustering}
 \begin{figure}[H]
 \centering
 \includesvg[inkscapelatex=false,width=\textwidth,height=0.72\textheight,keepaspectratio]{Builtsvg/latex/4}
@@ -491,13 +493,13 @@ scenes, 528,280 scene-cluster associations, 818 clusters with associations,
 numbers. They demonstrate that the remote archive was represented as a
 recoverable graph of scenes, clusters, and samples.
 
-\section{Azure Poland processing client}
+\subsection{Azure Poland processing client}
 The Planetary Computer archive remained authoritative. After network-read
 optimisation, a paid Azure VM located in Poland served as the high-throughput
 client. The VM supplied a better-connected execution environment and adequate
 disk and memory for concurrent COG work. It was not a replacement archive.
 
-\section{Resume engineering}
+\subsection{Resume engineering}
 The workflow uses SQLite backup operations, cluster search state, scene shards,
 completion markers, manifests, and SHA-256 checksums. A failure therefore
 invalidates incomplete units rather than erasing all completed work.
@@ -507,14 +509,14 @@ remote extraction is decomposed into verified subproblems, and the computation
 can resume from the last trusted state. The same principle is later applied to
 local caches and model checkpoints.}
 
-\section{Overview versus exact reads}
+\subsection{Overview versus exact reads}
 The 1~km target does not necessarily require repeatedly downloading every
 10-metre Sentinel-1 pixel. Overview reads reduce the remote payload and
 decompression cost. Exact reads remain available for validation and sensitivity
 analysis. Separate namespaces prevent approximate and exact arrays from sharing
 a filename and silently changing scientific meaning.
 
-\chapter{Storage Formats, Merge, and Alignment}
+\section{Storage Formats, Merge, and Alignment}
 
 The extraction stage produces several kinds of information: scalar tables,
 mutable job state, multidimensional rasters, and completed evidence products.
@@ -523,7 +525,7 @@ the scientific method rather than an implementation detail. The sections below
 explain how each representation is used and how the joins between them are
 checked.
 
-\section{Why no single file format is sufficient}
+\subsection{Why no single file format is sufficient}
 The project uses each representation for a distinct access pattern:
 \begin{itemize}
     \item ZIP streaming for the compressed observation archive;
@@ -539,13 +541,13 @@ Choosing a universal format would force a compromise between streaming text,
 indexed state, cloud rasters, and GPU batch reads. The storage architecture is
 therefore an important part of the scientific design.
 
-\section{Low-memory merge}
+\subsection{Low-memory merge}
 The merge path retains raster arrays in yearly modality-specific Zarr stores
 and joins scalar tables through stable sample identities and explicit row-index
 columns. DuckDB and Parquet scans avoid loading the complete global table into
 one pandas object.
 
-\section{The row-order hazard}
+\subsection{The row-order hazard}
 A row-order error is more dangerous than a visible exception. If a Sentinel
 array has the correct shape but its sidecar IDs are in a different producer
 order, the model can train on plausible but incorrect pairs. The alignment
@@ -564,7 +566,7 @@ assert expected_patch_shape(zarr_array)
 CRS, affine transform, pixel-centre offsets, overview resampling, and physical
 support area still require modality-specific geolocation checks.}
 
-\chapter{The Optimization Programme}
+\section{The Optimization Programme}
 
 The optimisation programme should be read as a sequence of responses to
 specific failure modes. The aim was not to make every individual operation
@@ -575,7 +577,7 @@ because a global experiment can be slow even when its arithmetic is efficient:
 the dominant cost may be waiting for data, moving data, or repeating work that
 has already been completed.
 
-\section{The counterfactual}
+\subsection{The counterfactual}
 The counterfactual makes the need for these choices concrete. Without
 optimisation, repeated remote reads, expanded patch tables, incompatible
 intermediates, per-batch raster decoding, and GPU starvation were estimated to
@@ -584,7 +586,7 @@ network transfer requirement would also be impractical. More importantly, this
 would have been a fragile calculation: a failure late in the run could have
 forced large portions of the earlier work to be repeated.
 
-\section{Optimization principle one: do not create data that will be discarded}
+\subsection{Optimization principle one: do not create data that will be discarded}
 The first decision was to prevent unnecessary data from entering the expensive
 part of the pipeline. Quality and depth filtering occur before expensive joins,
 so rejected observations do not trigger remote extraction. Daily labels replace
@@ -596,7 +598,7 @@ model cache. Each of these choices is small by itself, but together they reduce
 the number of rows, dates, bytes, and conversions that every later stage must
 handle.
 
-\section{Optimization principle two: amortize remote fixed costs}
+\subsection{Optimization principle two: amortize remote fixed costs}
 Remote operations have a fixed cost before any useful pixel is returned:
 connection setup, authentication, catalogue search, asset opening, and block
 decompression. Scene clustering, cached STAC searches, COG-aligned windows,
@@ -604,7 +606,7 @@ overview reads, and shared scene opens amortise those costs over many
 station-date rows. The Azure location then makes the resulting request pattern
 practical by reducing the network distance and improving sustained transfer.
 
-\section{Optimization principle three: cache at the storage grain}
+\subsection{Optimization principle three: cache at the storage grain}
 The most useful cache unit is the unit the storage system can retrieve
 efficiently. Individual patch caches had little reuse because the
 unique/requested index ratio was close to one: many requested patches touched
@@ -613,7 +615,7 @@ decodes each touched chunk once, normalises it once, and gathers requested rows
 in batch order. This avoids paying the decompression and conversion cost again
 for every training example.
 
-\section{Optimization principle four: move deterministic work off the GPU}
+\subsection{Optimization principle four: move deterministic work off the GPU}
 The GPU should spend its limited time on operations that benefit from massive
 parallel arithmetic. The local normalised cache therefore performs fill
 handling, physical scale conversion, validity detection, training-only
@@ -621,7 +623,7 @@ standardisation, clipping, and FP16 conversion once. Training can then read
 value and mask channels from memory-mapped arrays rather than repeatedly asking
 the GPU to perform the same preparation for every epoch.
 
-\section{Optimization principle five: bound parallelism}
+\subsection{Optimization principle five: bound parallelism}
 Parallelism is useful only while the shared resources can support it. Unbounded
 workers and prefetch queues can exhaust RAM, thrash the disk cache, or trigger
 remote throttling. The training system therefore caps workers, prefetch depth,
@@ -629,7 +631,7 @@ and future-batch queues. Pinned memory and asynchronous CUDA copies are used
 within that bounded system so that short delays can be hidden without turning
 the input pipeline into an uncontrolled memory consumer.
 
-\section{Optimization principle six: preserve the effective batch under finite VRAM}
+\subsection{Optimization principle six: preserve the effective batch under finite VRAM}
 The desired effective batch was 2,048, but the available VRAM could not hold all
 of those examples and their intermediate activations in one allocation.
 Microbatches and gradient accumulation preserve the effective batch without
@@ -638,14 +640,14 @@ occupied by suitable intermediate values, while gradient clipping, EMA, and
 best-checkpoint restoration improve stability when a long run encounters
 unusually difficult batches or noisy epochs.
 
-\section{Optimization principle seven: make caches self-describing}
+\subsection{Optimization principle seven: make caches self-describing}
 An optimisation is dangerous if it makes stale data look current. Scaler hashes
 and build signatures prevent arrays generated under different decode rules,
 years, or normalisation settings from being mixed. Temporary
 \texttt{.building} files are promoted only after validation, so an interrupted
 construction cannot silently replace the last complete cache.
 
-\section{Optimization register in prose}
+\subsection{Optimization register in prose}
 The engineering decisions are interdependent. Streaming ingestion reduces host
 memory; Parquet reduces persistent scalar volume; clustered extraction reduces
 remote fixed costs; Zarr preserves spatial arrays; chunk caching reduces
@@ -654,7 +656,7 @@ GPU idle time; and gradient accumulation preserves optimisation behaviour under
 VRAM limits. Treating these as isolated tricks would miss their multiplicative
 effect.
 
-\section{What the optimisation means in computer terms}
+\subsection{What the optimisation means in computer terms}
 For a physics reader, the central distinction is between computation and
 movement. A processor may be able to calculate a mean over a raster window very
 quickly, but it cannot calculate until the bytes have arrived from the remote
@@ -711,7 +713,7 @@ that an experiment which could fail for storage, network, memory, or restart
 reasons became an experiment whose assumptions are explicit and whose
 intermediate states can be verified.}
 
-\section{Why the unoptimised experiment was not practical}
+\subsection{Why the unoptimised experiment was not practical}
 It is useful to describe the original difficulty as a queue of physical
 operations rather than as an abstract ``large dataset''. A request began at a
 station and date, contacted a catalogue service, obtained an authorised asset
@@ -891,7 +893,8 @@ completion markers, manifests, checksums, and resume logic\\
 \end{tabular}
 \end{center}
 
-\chapter{Engineering Internals of the Global Run}
+\chapter{Results}
+\section{Engineering Internals of the Global Run}
 
 The preceding chapters described the pipeline from the outside. This chapter
 now follows the data through the computer itself: which unit is processed at
@@ -900,7 +903,7 @@ distinguished from a completed one, and how the training loop moves data
 between storage, CPU memory, and GPU memory. This view connects the engineering
 decisions to the scientific guarantees reported later.
 
-\section{The unit of computation was redesigned several times}
+\subsection{The unit of computation was redesigned several times}
 The first conceptual unit of the experiment was a station-date sample. That
 unit is scientifically natural because the target is defined at a station and
 date, but it is computationally inefficient. Many station dates fall in the
@@ -917,7 +920,7 @@ it reduces repeated work without changing the definition of the target row.
 Each conversion writes an index that maps the cheaper computational unit back
 to the original station-date identity.
 
-\section{Storage layers and why no single format was sufficient}
+\subsection{Storage layers and why no single format was sufficient}
 \begin{figure}[H]
 \centering
 \includesvg[inkscapelatex=false,width=\textwidth,height=0.72\textheight,keepaspectratio]{Builtsvg/latex/5}
@@ -942,7 +945,7 @@ structured, the cache layer is fast, and the tensor layer is model-shaped.
 Hashes, manifests, shapes, and row-order sidecars are what make those
 representations equivalent rather than ambiguous copies.
 
-\section{Resumable extraction as a state machine}
+\subsection{Resumable extraction as a state machine}
 \begin{figure}[H]
 \centering
 \includesvg[inkscapelatex=false,width=\textwidth,height=0.72\textheight,keepaspectratio]{Builtsvg/latex/6}
@@ -959,7 +962,7 @@ a machine interruption. SQLite backup and snapshot operations provide a second
 line of defence when the mutable state database itself must be moved between
 machines.
 
-\section{Request geometry, compression, and network cost}
+\subsection{Request geometry, compression, and network cost}
 Remote raster access has at least four costs: request latency, bytes
 transferred, decompression, and local window assembly. A small request is not
 always cheaper because authentication and HTTP setup are paid per request. A
@@ -976,7 +979,7 @@ approximation into an explicit experimental factor. A future ablation can
 compare exact and overview-derived features without reconstructing the entire
 archive.
 
-\section{Cache signatures and invalidation}
+\subsection{Cache signatures and invalidation}
 Persistent caches are useful only if stale values cannot be confused with new
 values. Cache names and manifests include the contract version, source
 namespace, feature list, scaling policy, precision, clipping policy, and
@@ -991,7 +994,7 @@ station-date join may be wrong even though every array has the expected shape.
 Signatures make such changes visible in the release manifest instead of
 leaving them as undocumented differences between runs.
 
-\section{Memory traffic during training}
+\subsection{Memory traffic during training}
 Training performance was constrained by memory movement as much as by matrix
 multiplication. The cache stores a value channel and a validity channel, uses
 FP16 for the normalised local arrays, and gathers only the rows and temporal
@@ -1007,7 +1010,7 @@ gradient clipping prevents a rare large residual or invalid intermediate from
 destabilising an update. These mechanisms address different bottlenecks and
 cannot be treated as interchangeable speed settings.
 
-\chapter{Model Architecture and Physical Interpretation}
+\section{Model Architecture and Physical Interpretation}
 
 The model is introduced only after the data contract and computational pathway
 are established. This is deliberate: the architecture is a response to the
@@ -1016,7 +1019,7 @@ of neural-network components. Each branch has a defined role, and the fusion
 stage combines those roles while retaining enough structure to analyse the
 result.
 
-\section{Final v19.5 configuration}
+\subsection{Final v19.5 configuration}
 \begin{itemize}
     \item Architecture: multiscale residual spatial-temporal attention gated fusion.
     \item Spatial width: 48.
@@ -1028,14 +1031,14 @@ result.
     \item EMA decay 0.85 and gradient clipping norm 2.0.
 \end{itemize}
 
-\section{Full model diagram}
+\subsection{Full model diagram}
 \begin{figure}[H]
 \centering
 \includesvg[inkscapelatex=false,width=\textwidth,height=0.72\textheight,keepaspectratio]{Builtsvg/latex/7}
 \caption{v19.5 model architecture. Separate branches preserve measurement semantics before adaptive fusion.}
 \end{figure}
 
-\section{Spatial encoders}
+\subsection{Spatial encoders}
 EVI, LST, and Sentinel-1 receive independent stems because their values have
 different units, noise, missingness, and physical interpretations. Each stem
 uses convolution, GroupNorm, GELU, and multi-scale residual blocks. A local
@@ -1048,28 +1051,28 @@ salient extreme. Attention pooling learns which spatial positions matter for
 the current example. Concatenating all three avoids forcing one summary
 statistic to represent every landscape.
 
-\section{Temporal TCN}
+\subsection{Temporal TCN}
 The temporal branch projects a sequence into hidden width, applies ordinary and
 dilated one-dimensional convolutions, scores valid history steps, and gates the
 last valid state against the broader history. This resembles a learned
 finite-memory filter: it can represent rainfall persistence, delayed
 infiltration, evaporation-driven drying, and recent-event dominance.
 
-\section{Static and location branches}
+\subsection{Static and location branches}
 Clay, sand, silt, elevation, slope, and circular aspect are projected through a
 static MLP. A location-history configuration also receives a controlled spatial
 representation. This can improve regime interpolation but creates a memorisation
 risk; a network-disjoint split is stronger than random rows but is not identical
 to a continent or biome holdout.
 
-\section{Modality gate and fusion}
+\subsection{Modality gate and fusion}
 The five-way gate produces non-negative weights summing to one over EVI, LST,
 Sentinel-1, temporal history, and static context. These weights are predictive
 routing coefficients, not causal contribution fractions. The fusion MLP then
 models conditional interactions such as precipitation followed by high VPD on
 sandy soil or radar structure under dense vegetation.
 
-\section{Calibration}
+\subsection{Calibration}
 The calibration layer is:
 \[
 \hat{y}=c_0+c_1a+c_2r+c_3ar+c_4a^2+c_5r^2,
@@ -1082,7 +1085,7 @@ and learns only the correction supported by the data.
 physical representation. The calibrated score belongs to the complete system,
 not necessarily to the uncalibrated neural encoder alone.}
 
-\chapter{Training, Numerical Stability, and Reproducibility}
+\section{Training, Numerical Stability, and Reproducibility}
 
 Training is the point at which the prepared data, model design, and hardware
 constraints meet. A model can be mathematically well specified and still
@@ -1091,13 +1094,13 @@ mixed-precision arithmetic is unstable, or if a checkpoint cannot be traced
 back to its input contract. These sections therefore describe the optimisation
 procedure together with the safeguards that make it repeatable.
 
-\section{Hyperparameter search}
+\subsection{Hyperparameter search}
 The project uses staged Optuna studies rather than fully training every
 candidate. Shorter and bounded trials screen architectures and optimisation
 settings before full retraining. The final exported configuration is treated as
 the authority when historical notebook defaults differ.
 
-\section{Loss and optimisation}
+\subsection{Loss and optimisation}
 The final exported v19.5 configuration records MSE:
 \[
 \mathcal{L}_{\mathrm{MSE}}=\frac{1}{N}\sum_{i=1}^{N}
@@ -1107,27 +1110,27 @@ AdamW updates the weights using gradients from backpropagation while weight
 decay discourages unnecessarily large parameters. Gradient clipping limits
 rare extreme updates.
 
-\section{AMP, accumulation, and EMA}
+\subsection{AMP, accumulation, and EMA}
 Automatic mixed precision reduces memory and can accelerate matrix operations.
 Gradient accumulation approximates a large batch through several microbatches.
 EMA maintains a smoothed parameter state that is less sensitive to the noise of
 the final individual updates. These mechanisms improve feasibility but add
 state and numerical conditions that belong in the reproducibility record.
 
-\section{Compilation and hardware dependence}
+\subsection{Compilation and hardware dependence}
 The v19.5 training path smoke-tests \texttt{torch.compile} with a
 reduce-overhead mode and falls back to eager execution when compilation is
 unstable. This is a practical engineering compromise: compilation can reduce
 framework overhead but must not be a single point of failure.
 
-\section{Checkpoint policy}
+\subsection{Checkpoint policy}
 Checkpoints are written atomically, and configuration, scaler, manifest, and
 hash information is retained. The historical workflow includes test-$R^2$
 checkpoint selection; this is explicitly documented because repeated test
 selection means the nominal test set should be interpreted as
 development-held-out rather than perfectly untouched.
 
-\chapter{Evaluation and Error Analysis}
+\section{Evaluation and Error Analysis}
 
 The evaluation is presented as a set of connected questions rather than as one
 headline number. First, the aggregate scores establish the overall level of
@@ -1137,12 +1140,12 @@ consistent across stations. This order keeps the interpretation close to the
 measurement process and avoids treating a single average as a complete
 description of model behaviour.
 
-\section{Evaluation philosophy}
+\subsection{Evaluation philosophy}
 Evaluation is treated as an observational campaign analysis. One global score
 cannot show whether errors are concentrated in a network, season, moisture bin,
 region, acquisition-age stratum, or missingness regime.
 
-\section{Primary results}
+\subsection{Primary results}
 \begin{center}
 \begin{tabular}{lrrrr}
 \toprule
@@ -1158,7 +1161,7 @@ The location-history model wins at 62.62\% of matched stations, with paired
 RMSE 0.06704 versus 0.08490 for the environment-only model. These paired
 statistics are more informative than comparing aggregate row counts alone.
 
-\section{Temporal and regional diagnostics}
+\subsection{Temporal and regional diagnostics}
 Year-by-year performance is strong in 2023--2024 and weaker in 2025--2026.
 This may reflect distribution shift, event composition, station mix, coverage,
 or target/raster availability. The analysis reports the pattern without
@@ -1171,7 +1174,7 @@ claiming a causal explanation.
 signal, not by itself a causal explanation.}
 \end{figure}
 
-\section{Figures from the global analysis}
+\subsection{Figures from the global analysis}
 \begin{figure}[H]
 \centering
 \safeimage{error_analysis_results_v19_5/plots/overall_test_mae_rmse.png}{0.72}
@@ -1190,7 +1193,7 @@ signal, not by itself a causal explanation.}
 \caption{Residual distributions for the held-out configurations.}
 \end{figure}
 
-\section{Oracle trimming}
+\subsection{Oracle trimming}
 Oracle trimming ranks predictions by their realised error using the true target
 and recomputes retained-set $R^2$. The location-history model reaches $R^2=0.70$
 after removing 1.30\% of its worst errors, $R^2=0.80$ after 7.90\%, and
@@ -1208,9 +1211,9 @@ concentration, not an operational filtering method.}
 Operational filtering must use information available before prediction, such as
 missingness, acquisition age, uncertainty, or regime flags.}
 
-\chapter{Extended Diagnostic Gallery and Technical Case Studies}
+\section{Extended Diagnostic Gallery and Technical Case Studies}
 
-\section{Why the gallery is part of the result}
+\subsection{Why the gallery is part of the result}
 The figures in this chapter are not decorative appendices. Each plot answers a
 different failure question. A global average tests aggregate agreement; a
 station-level diagnostic tests concentration across sites; a month-of-year plot
@@ -1219,7 +1222,7 @@ paired station comparison tests
 whether one configuration consistently helps the same locations; residual
 plots test whether calibration has removed scale-dependent bias.
 
-\section{Monthly and seasonal behaviour}
+\subsection{Monthly and seasonal behaviour}
 \begin{figure}[H]
 \centering
 \safeimage{error_analysis_results_v19_5/plots/monthly_test_rmse.png}{0.82}
@@ -1239,7 +1242,7 @@ snow or freeze conditions, rainfall-event frequency, acquisition geometry, and
 the depth response of the target. Interpreting a seasonal curve therefore
 requires the acquisition-age and missingness diagnostics alongside it.
 
-\section{Moisture range and residual structure}
+\subsection{Moisture range and residual structure}
 \begin{figure}[H]
 \centering
 \safeimage{error_analysis_results_v19_5/plots/test_rmse_by_moisture_bin.png}{0.82}
@@ -1261,7 +1264,7 @@ would indicate remaining scale-dependent error.}
 tail are distinct pieces of evidence.}
 \end{figure}
 
-\section{Raw versus calibrated output}
+\subsection{Raw versus calibrated output}
 \begin{figure}[H]
 \centering
 \safeimage{error_analysis_results_v19_5/plots/raw_vs_calibrated_location_history_test.png}{0.82}
@@ -1282,7 +1285,7 @@ incorrect gain or offset. The calibrator can correct this numerical mismatch,
 but its coefficients must be fitted on development data and frozen before an
 untouched certification test.
 
-\section{Paired station and regional comparisons}
+\subsection{Paired station and regional comparisons}
 \begin{figure}[H]
 \centering
 \safeimage{error_analysis_results_v19_5/plots/paired_test_metrics.png}{0.82}
@@ -1297,7 +1300,7 @@ caused by different station populations.}
 uniform, which is why the aggregate result needs station diagnostics.}
 \end{figure}
 
-\section{Worst-station and event-context analyses}
+\subsection{Worst-station and event-context analyses}
 \begin{figure}[H]
 \centering
 \safeimage{error_analysis_results_v19_5/plots/worst_30_stations_location_history_test.png}{0.82}
@@ -1319,7 +1322,7 @@ location/history changes the identity of difficult regimes.}
 before being attributed to a model architecture.}
 \end{figure}
 
-\section{What the gallery establishes}
+\subsection{What the gallery establishes}
 The diagnostic gallery establishes that the result is not a single accidental
 number. It exposes temporal variation, station heterogeneity, range dependence,
 calibration dependence, and the long tail of hard cases. It does not by itself
@@ -1327,49 +1330,49 @@ establish causal physical response or area-weighted global accuracy. Those
 claims require additional experimental design, especially block uncertainty
 and ecological holdouts.
 
-\chapter{Technical Hurdles and Solutions}
+\section{Technical Hurdles and Solutions}
 
-\section{Data association was harder than tensor arithmetic}
+\subsection{Data association was harder than tensor arithmetic}
 A tensor can have the correct rank, dtype, and finite values while belonging to
 the wrong station and date. The project therefore treated identity as a
 scientific product. Station/date keys, cell keys, row indexes, manifests, and
 sidecar tables survived across extraction, merging, caching, and training.
 
-\section{Same date is not necessarily same physical state}
+\subsection{Same date is not necessarily same physical state}
 An ISMN daily mean and a nearest-valid Sentinel-1 acquisition can be separated
 by rainfall, evaporation, irrigation, freezing, or drainage. The resulting
 error contains temporal representativeness uncertainty. Strict same-day matching
 would reduce this uncertainty but also reduce global coverage.
 
-\section{Calibration can dominate the headline score}
+\subsection{Calibration can dominate the headline score}
 The raw location-history model is poorly scaled relative to the final target,
 while calibration makes it useful. The complete system therefore deserves the
 calibrated score, but the representation should not be credited with all of the
 calibration improvement. Raw and calibrated metrics are both reported.
 
-\section{Location is useful and dangerous}
+\subsection{Location is useful and dangerous}
 Coordinates and station history help represent broad climate and soil regimes.
 They can also encode site identity. A network-disjoint split limits direct
 network leakage, but does not prove transfer to unseen ecological or continental
 regimes. This is why the environment-only comparison is a critical control.
 
-\section{Missingness can become a hidden predictor}
+\subsection{Missingness can become a hidden predictor}
 Validity masks preserve the difference between a low measurement and no
 measurement. However, the mask itself can correlate with season, cloud cover,
 region, sensor operation, or network. A model can exploit availability rather
 than physical signal. Missingness-stratified performance and mask-only
 baselines are appropriate follow-up tests.
 
-\section{Physical validity exceeds numerical validity}
+\subsection{Physical validity exceeds numerical validity}
 Finite-value and range checks do not prove hydrological plausibility. Strong
 aggregate $R^2$ can coexist with implausible wetting transitions, spatial
 discontinuities, or climate-specific failures. Event timing, persistence,
 moisture-bin residuals, texture-stratified errors, and monotonic stress tests
 are needed for stronger physical claims.
 
-\chapter{Reproducibility, Audit Trail, and Release}
+\section{Reproducibility, Audit Trail, and Release}
 
-\section{What is recorded}
+\subsection{What is recorded}
 The release surface includes:
 \begin{itemize}
     \item contract and feature schema;
@@ -1401,7 +1404,7 @@ its cause would not be. That distinction is especially important in a
 multi-provider experiment where a source catalog or remote asset can change
 independently of the model code.
 
-\section{Failure should be explicit}
+\subsection{Failure should be explicit}
 The builders reject missing columns, duplicate station/date rows, unsupported
 split labels, missing features, wrong shapes, mixed temporal lengths, non-finite
 arrays, and invalid numeric targets. This is preferable to silently coercing
@@ -1423,7 +1426,7 @@ a pipeline failure and must stop the run. Treating both cases as a generic zero
 would make the model appear complete while changing the physical meaning of
 the input.
 
-\section{Reproduction sequence}
+\subsection{Reproduction sequence}
 \begin{enumerate}
     \item Verify the contract and source manifests.
     \item Rebuild or validate the catalog and daily Parquet.
@@ -1450,7 +1453,7 @@ still valid under the current contract and source namespace. Otherwise it must
 be rebuilt. This is the operational meaning of resumability: reuse is allowed
 only when equivalence has been demonstrated.
 
-\section{Change control across providers}
+\subsection{Change control across providers}
 The data providers evolve on different schedules. A remote catalogue can expose
 a new asset while the station archive remains unchanged; a processing library
 can alter how a COG window is decoded; and a model notebook can change its
@@ -1474,7 +1477,7 @@ allowed to write a production namespace. This is the data-engineering
 equivalent of checking a new numerical integrator against a solved test
 problem before using it in a long simulation.
 
-\section{Why auditability matters scientifically}
+\subsection{Why auditability matters scientifically}
 Auditability is not only a software quality property. It determines whether a
 physics interpretation can be challenged and reproduced. If a location-history
 model improves over an environment-only model, the reader needs to know
@@ -1582,5 +1585,31 @@ signature, model checkpoint, and calibration version.
 \nocite{*}
 \bibliographystyle{plainnat}
 \bibliography{references}
+
+\section*{Data Sources}
+\addcontentsline{toc}{section}{Data Sources}
+The project data were obtained from the following authoritative repositories and
+catalogues. These entries identify data provenance only; methodological papers
+for the products are not included here.
+\begin{itemize}
+    \item \textbf{International Soil Moisture Network (ISMN):}
+    \url{https://ismn.earth/en/}
+    \item \textbf{Copernicus Climate Change Service ERA5-Land:}
+    \url{https://doi.org/10.24381/cds.e2161bac}
+    \item \textbf{NASA SMAP L4 soil moisture, Version 5:}
+    \url{https://nsidc.org/data/spl4smau/versions/5}
+    \item \textbf{MODIS vegetation indices (MOD13Q1 Collection 061):}
+    \url{https://lpdaac.usgs.gov/products/mod13q1v061/}
+    \item \textbf{MODIS land-surface temperature (MOD11A2 Collection 061):}
+    \url{https://lpdaac.usgs.gov/products/mod11a2v061/}
+    \item \textbf{Sentinel-1 imagery and RTC products:}
+    Microsoft Planetary Computer \url{https://planetarycomputer.microsoft.com/docs/}
+    and Alaska Satellite Facility \url{https://hyp3-docs.asf.alaska.edu/guides/rtc_product_guide/}
+    \item \textbf{Soil and terrain layers:}
+    Google Earth Engine Data Catalog
+    \url{https://developers.google.com/earth-engine/datasets}
+    and NASADEM
+    \url{https://doi.org/10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001}
+\end{itemize}
 
 \end{document}
